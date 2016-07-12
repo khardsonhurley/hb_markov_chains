@@ -45,11 +45,28 @@ def make_chains(text_string):
 def make_text(chains):
     """Takes dictionary of markov chains; returns random text."""
 
-    text = ""
+    #text = "" #string to be used at very end
 
-    # your code goes here
+    sentence = [] #create empty list "sentence"
+    dict_of_words = chains #saves the inputted dictionary as a variable
 
-    return text
+    first_tuple = choice(dict_of_words.keys())   #randomly selected a key in the 
+                                                        #dictionary
+    
+    #VERIFY THE TUPLE: If tuple not in dictionary, end loop and print text. 
+
+    sentence.append(first_tuple[0])#add tuple[0] to our sentence
+    sentence.append(first_tuple[1])#add tuple[1] to our sentence
+    print sentence
+    random_third_word = choice(dict_of_words[first_tuple])
+    print random_third_word
+    #randomly pick an item in the value's list
+    #add the new string to "sentence"
+    #to get new key call index -2 and -1 of "sentence"--> creating a tuple
+    #call dictionary on new tuple --> unpack etc. 
+
+    #turn "sentence" into long string by adding elements into the string "text"
+
 
 
 input_path = "green-eggs.txt"
@@ -58,10 +75,10 @@ input_path = "green-eggs.txt"
 input_text = open_and_read_file(input_path)
 
 # Get a Markov chain
-make_chains(input_text)
+chains = make_chains(input_text)
 
 # # Produce random text
-# random_text = make_text(chains)
+random_text = make_text(chains)
 
-# print random_text
+random_text
 
