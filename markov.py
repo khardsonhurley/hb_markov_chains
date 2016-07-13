@@ -2,8 +2,6 @@ from random import choice
 
 import sys
 
-
-
 def open_and_read_file(file_path):
     """Takes file path as string; returns text as string.
 
@@ -46,7 +44,7 @@ def make_chains(text_string):
         values_list = chains.get(word_tuple, [])
 
         #Adding new word (in list) to old list in the value of key word_tuple
-        values_list.append(words[i+2])
+        values_list.append(words[i + 2])
 
         chains[word_tuple] = values_list
 
@@ -62,10 +60,24 @@ def make_text(chains):
     #create empty list "sentence"
     sentence = [] 
     #saves the inputted dictionary as a variable
-    dict_of_words = chains 
-
-    #randomly selected a key in the dictionary
-    first_tuple = choice(dict_of_words.keys())
+    dict_of_words = chains
+    #new dictionary to store all keys and values where the key has a capital letter. 
+    dict_of_capitals = {}
+    #new list to put all the keys that will go into dict_of_capitals.
+    list_of_keys = []
+    #Get list of keys from dict_of_words to sort through. 
+    list_of_keys = dict_of_words.keys() 
+    #Iterating through the list of tuples
+    for key in list_of_keys:
+        #Assigning the first letter of the first word in the tuple to a variable. 
+        first_letter = key[0][0]
+        #Check to see if that letter is capital. If it is, add the key and value to dict_of_capitals. 
+        if first_letter.isupper() == True:
+            value = dict_of_words[key]
+            dict_of_capitals[key] = value
+   
+    #randomly selected a key in the capitals dictionary
+    first_tuple = choice(dict_of_capitals.keys())
 
     #add tuple[0] to our sentence
     sentence.append(first_tuple[0])
@@ -108,16 +120,19 @@ def format_string(string):
     return text.join(string_list)
         
 
-input_path = sys.argv[1]
+def main():
 
-# Open the file and turn it into one long string
-input_text = open_and_read_file(input_path)
+    input_path = sys.argv[1]
+    # Open the file and turn it into one long string
+    input_text = open_and_read_file(input_path)
 
-# Get a Markov chain
-chains = make_chains(input_text)
+    # Get a Markov chain
+    chains = make_chains(input_text)
 
-# # Produce random text
-random_text = make_text(chains)
+    # # Produce random text
+    random_text = make_text(chains)
 
-print random_text
+    print random_text
 
+if __name__ == '__main__':
+    main()
