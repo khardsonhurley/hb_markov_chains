@@ -16,6 +16,12 @@ def open_and_read_file(file_path):
     #returns a string of the content 
     return text_string 
 
+def user_input_n():
+
+    #get input from the user of however long the user wants the grams to be
+    n = int(raw_input("What do you want n to be for your n-grams? "))
+
+    return n    
 
 def make_chains(text_string):
     """Takes input text as string; returns _dictionary_ of markov chains.
@@ -35,20 +41,40 @@ def make_chains(text_string):
     #create empty dictionary that will contain word pairings with their third word options
     chains = {} 
 
+    n = user_input_n()
+
     #iterate using the indices of the list
-    for i in range(len(words)-2):
-        #get first key, turn into tuple, save as variable
-        word_tuple = tuple([words[i], words[i + 1]])     
-        
+    for i in range(len(words)-n):
+
+        #create empty list that we will append the words to and create a tuple for the key
+        word_list_for_key = []
+
+        #for loop for n times, to grab the appropriate amount of words and add them to list
+        for j in range(i,i+n):
+
+            #get first key, turn into tuple, save as variable
+            word_list_for_key.append(words[j])     
+
+        word_tuple = tuple(word_list_for_key)
+
         #add key to dictionary, if doesn't exist default empty list as value  
         values_list = chains.get(word_tuple, [])
 
         #Adding new word (in list) to old list in the value of key word_tuple
-        values_list.append(words[i + 2])
+        values_list.append(words[i + n])
 
         chains[word_tuple] = values_list
 
     return chains
+    
+
+
+
+
+#change the list into a tuple
+
+
+
 
 
 def make_text(chains):
@@ -129,7 +155,7 @@ def main():
     # Get a Markov chain
     chains = make_chains(input_text)
 
-    # # Produce random text
+    # Produce random text
     random_text = make_text(chains)
 
     print random_text
